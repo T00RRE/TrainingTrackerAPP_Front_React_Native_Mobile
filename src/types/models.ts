@@ -33,3 +33,9 @@ export interface TrainingLogDto {
     totalDuration: number;
     totalSets: number;
 }
+export interface WorkoutTemplateDto {
+  id: number;
+  name: string;
+  userId: number;
+  createdAt: string;
+}

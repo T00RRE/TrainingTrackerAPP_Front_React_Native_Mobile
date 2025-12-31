@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '../api/config';
-import { ExerciseSetDto} from '../types/models';
+import { ExerciseSetDto, WorkoutTemplateDto} from '../types/models';
 
 // Typ generyczny dla odpowiedzi, jeśli API zwraca standardowy JSON
 type ApiResponse<T> = T;
@@ -72,4 +72,11 @@ export const ExerciseSetService = {
         apiRequest<ExerciseSetDto>(`ExerciseSets/${setId}`, 'GET'),
     
     // ... tutaj dodamy później inne metody (POST, PUT, DELETE)
+};
+export const WorkoutService = {
+  getWorkoutTemplates: (_userId: number): Promise<WorkoutTemplateDto[]> => {
+    // Używamy Twojej funkcji apiRequest, aby zachować spójność
+    // Zakładam endpoint: WorkoutTemplates/user/{userId} na podstawie bazy
+    return apiRequest<WorkoutTemplateDto[]>(`WorkoutTemplates`, 'GET');
+  },
 };
