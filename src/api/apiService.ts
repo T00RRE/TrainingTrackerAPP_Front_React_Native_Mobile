@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '../api/config';
-import { ExerciseSetDto, WorkoutTemplateDto} from '../types/models';
+import { ExerciseSetDto, WorkoutSessionDetailsDto, WorkoutTemplateDto} from '../types/models';
 
 // Typ generyczny dla odpowiedzi, jeśli API zwraca standardowy JSON
 type ApiResponse<T> = T;
@@ -79,4 +79,11 @@ export const WorkoutService = {
     // Zakładam endpoint: WorkoutTemplates/user/{userId} na podstawie bazy
     return apiRequest<WorkoutTemplateDto[]>(`WorkoutTemplates`, 'GET');
   },
+};
+
+export const SessionService = {
+  // sessionId: np. 2, templateId: np. 1
+  getWorkoutSessionDetails: (sessionId: number, templateId: number): Promise<WorkoutSessionDetailsDto> => {
+    return apiRequest<WorkoutSessionDetailsDto>(`TrainingSessions/${sessionId}/details/${templateId}`, 'GET');
+  }
 };

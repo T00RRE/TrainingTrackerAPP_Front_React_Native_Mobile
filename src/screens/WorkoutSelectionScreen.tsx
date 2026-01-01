@@ -36,7 +36,10 @@ const WorkoutSelectionScreen = ({ navigation }: Props) => {
         style={styles.templateButton}
         onPress={() => {
           console.log("Wybrano:", item.name);
-          // Tutaj w przyszłości dodasz przejście do listy ćwiczeń danego szablonu
+          navigation.navigate('WorkoutSession', { 
+          sessionId: 2,        // Testowe ID sesji z Twojego Swaggera
+          templateId: item.id  // Dynamiczne ID szablonu z bazy (np. 1 dla Push)
+        });
         }}
       >
         <Text style={styles.templateText}>{item.name.toUpperCase()}</Text>

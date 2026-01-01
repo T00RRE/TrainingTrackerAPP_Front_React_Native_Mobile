@@ -5,6 +5,7 @@ import { RootStackParamList } from '../types/navigation';
 import HomeScreen from '../screens/HomeScreen.tsx';
 import DetailsScreen from '../screens/DetailsScreen';
 import WorkoutSelectionScreen from '../screens/WorkoutSelectionScreen.tsx';
+import WorkoutSessionScreen from '../screens/WorkoutSessionScreen.tsx';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -23,6 +24,11 @@ const AppNavigator = () => {
         component={WorkoutSelectionScreen} 
         options={{ headerShown: false }} 
       />
+      <Stack.Screen 
+  name="WorkoutSession" 
+  component={WorkoutSessionScreen} 
+  options={{ headerShown: false }} 
+/>
         <Stack.Screen 
           name="Details" 
           component={DetailsScreen} 

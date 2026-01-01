@@ -39,3 +39,16 @@ export interface WorkoutTemplateDto {
   userId: number;
   createdAt: string;
 }
+export interface SessionExerciseRowDto {
+  sessionExerciseId: number;
+  cwiczenie: string;
+  planowaneSerie: number;
+  wykonaneSerie: number;
+  ostatniCiezar: number | null;
+}
+
+export interface WorkoutSessionDetailsDto {
+  nazwaSzablonu: string;
+  dataTreningu: string;
+  cwiczenia: SessionExerciseRowDto[];
+}

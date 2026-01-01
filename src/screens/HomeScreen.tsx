@@ -12,10 +12,10 @@ const HomeScreen = ({ navigation }: Props) => {
       <Text style={styles.subtitle}>Wybierz akcję, aby rozpocząć:</Text>
       
       <TouchableOpacity 
-  style={styles.mainButton}
-  onPress={() => navigation.navigate('WorkoutSelection')} 
->
-  <Text style={styles.buttonText}>ROZPOCZNIJ TRENING</Text>
+        style={styles.mainButton}
+        onPress={() => navigation.navigate('WorkoutSelection')} 
+      >
+        <Text style={styles.buttonText}>ROZPOCZNIJ TRENING</Text>
 </TouchableOpacity>
     </View>
   );
