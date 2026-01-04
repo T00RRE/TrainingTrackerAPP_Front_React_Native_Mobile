@@ -85,5 +85,32 @@ export const SessionService = {
   // sessionId: np. 2, templateId: np. 1
   getWorkoutSessionDetails: (sessionId: number, templateId: number): Promise<WorkoutSessionDetailsDto> => {
     return apiRequest<WorkoutSessionDetailsDto>(`TrainingSessions/${sessionId}/details/${templateId}`, 'GET');
+    
+  },
+  finishSession: async (sessionId: number): Promise<void> => {
+    // Wysyłamy żądanie do Twojego endpointu Sessions/{id}
+    // Flagę 'endSession' Handler zamieni na datę w polu CompletedAt
+    return apiRequest<void>(`TrainingSessions/${sessionId}`, 'PUT', { 
+      EndSession: true 
+    });
+}
+};
+export const SetService = {
+  addSet: (data: { sessionExerciseId: number; setNumber: number; weight: number; reps: number }): Promise<number> => {
+    // Używamy apiRequest, usuwając "api/", jeśli Twój base URL już go ma
+    return apiRequest<number>('ExerciseSets', 'POST', data);
+  }
+};
+export const ExerciseService = {
+  // Nowa metoda do tworzenia i dodawania ćwiczenia naraz
+  createAndAddToSession: async (data: { 
+    sessionId: number; 
+    name: string; 
+    description: string; 
+    plannedSets: number 
+  }): Promise<number> => {
+    // Używamy ścieżki z Twojego kontrolera [HttpPost("create-new")]
+    // Pamiętaj o usunięciu "api/", jeśli Twój base URL już go zawiera
+    return apiRequest<number>('SessionExercises/create-new', 'POST', data);
   }
 };
