@@ -82,6 +82,13 @@ export const WorkoutService = {
 };
 
 export const SessionService = {
+  startSession: async (userId: number, templateId: number): Promise<number> => {
+    // Wysyłamy UserId oraz TemplateId do StartTrainingSessionHandler
+    return apiRequest<number>('TrainingSessions', 'POST', { 
+      UserId: userId, 
+      TemplateId: templateId 
+    });
+  },
   // sessionId: np. 2, templateId: np. 1
   getWorkoutSessionDetails: (sessionId: number, templateId: number): Promise<WorkoutSessionDetailsDto> => {
     return apiRequest<WorkoutSessionDetailsDto>(`TrainingSessions/${sessionId}/details/${templateId}`, 'GET');

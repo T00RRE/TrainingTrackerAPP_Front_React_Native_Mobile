@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator, Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
-import { WorkoutService } from '../api/apiService';
+import { WorkoutService, SessionService } from '../api/apiService';
 import { WorkoutTemplateDto } from '../types/models';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'WorkoutSelection'>;
@@ -29,18 +29,36 @@ const WorkoutSelectionScreen = ({ navigation }: Props) => {
     loadTemplates();
   }, []);
 
+  // NOWA FUNKCJA: Obsługuje tworzenie nowej sesji na backendzie
+  const handleSelectTemplate = async (templateId: number) => {
+    try {
+      setLoading(true);
+      
+      // 1. Wywołujemy StartTrainingSessionHandler na backendzie
+      // Przekazujemy UserId (1) oraz TemplateId, aby skopiować ćwiczenia
+      const newSessionId = await SessionService.startSession(1, templateId);
+      
+      console.log("Utworzono nową sesję o ID:", newSessionId);
+
+      // 2. Nawigujemy do ekranu sesji z dynamicznym ID sesji i ID szablonu
+      navigation.navigate('WorkoutSession', { 
+        sessionId: newSessionId,
+        templateId: templateId 
+      });
+    } catch (error) {
+      Alert.alert("Błąd", "Nie udało się rozpocząć nowej sesji treningowej.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Funkcja renderująca pojedynczy przycisk treningu (np. PUSH, PULL)
   const renderItem = ({ item, index }: { item: WorkoutTemplateDto, index: number }) => (
     <View>
       <TouchableOpacity 
         style={styles.templateButton}
-        onPress={() => {
-          console.log("Wybrano:", item.name);
-          navigation.navigate('WorkoutSession', { 
-          sessionId: 2,        // Testowe ID sesji z Twojego Swaggera
-          templateId: item.id  // Dynamiczne ID szablonu z bazy (np. 1 dla Push)
-        });
-        }}
+        onPress={() => handleSelectTemplate(item.id)}
       >
         <Text style={styles.templateText}>{item.name.toUpperCase()}</Text>
       </TouchableOpacity>
@@ -59,7 +77,6 @@ const WorkoutSelectionScreen = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      {/* DODAJEMY TO: Przycisk powrotu, który używa zmiennej navigation */}
       <TouchableOpacity 
         style={styles.backButton} 
         onPress={() => navigation.goBack()}
@@ -88,7 +105,7 @@ const WorkoutSelectionScreen = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 
-    backgroundColor: '#2D2F33', // Ciemne tło z Twojego projektu
+    backgroundColor: '#2D2F33', 
     alignItems: 'center', 
     paddingTop: 60 
   },
@@ -108,7 +125,7 @@ const styles = StyleSheet.create({
     borderColor: '#FFF',
     borderRadius: 20,
     paddingVertical: 10,
-    maxHeight: '60%' // Ograniczamy wysokość, by przycisk "Dodaj" był widoczny
+    maxHeight: '60%' 
   },
   templateButton: {
     paddingVertical: 25,
