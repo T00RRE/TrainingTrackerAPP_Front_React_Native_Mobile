@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '../api/config';
-import { ExerciseSetDto, WorkoutSessionDetailsDto, WorkoutTemplateDto} from '../types/models';
+import { ExerciseSetDto, TrainingSessionDto, WorkoutSessionDetailsDto, WorkoutTemplateDto} from '../types/models';
 
 // Typ generyczny dla odpowiedzi, jeśli API zwraca standardowy JSON
 type ApiResponse<T> = T;
@@ -100,7 +100,12 @@ export const SessionService = {
     return apiRequest<void>(`TrainingSessions/${sessionId}`, 'PUT', { 
       EndSession: true 
     });
-}
+    
+},
+getTrainingSessions: async (userId: number): Promise<TrainingSessionDto[]> => {
+    // Upewnij się, że ścieżka pasuje do Twojego kontrolera na backendzie
+    return apiRequest<TrainingSessionDto[]>(`TrainingSessions/user/${userId}`, 'GET');
+  }
 };
 export const SetService = {
   addSet: (data: { sessionExerciseId: number; setNumber: number; weight: number; reps: number }): Promise<number> => {

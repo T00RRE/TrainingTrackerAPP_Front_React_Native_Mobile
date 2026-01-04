@@ -52,3 +52,12 @@ export interface WorkoutSessionDetailsDto {
   dataTreningu: string;
   cwiczenia: SessionExerciseRowDto[];
 }
+export interface TrainingSessionDto {
+  id: number;
+  userId: number;
+  templateId: number;
+  templateName: string; // Nazwa szablonu (np. PUSH, PULL)
+  startedAt: string;    // Daty z backendu przychodzą jako stringi ISO
+  completedAt: string | null; // Może być nullem, jeśli trening trwa
+  notes: string | null;
+}
