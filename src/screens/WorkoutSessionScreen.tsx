@@ -35,6 +35,31 @@ const [createModalVisible, setCreateModalVisible] = useState(false);
 const [newName, setNewName] = useState('');
 const [newDescription, setNewDescription] = useState('');
 const [newPlannedSets, setNewPlannedSets] = useState('3');
+const handleRemoveExercise = (sessionExerciseId: number, name: string) => {
+  Alert.alert(
+    "Usuń ćwiczenie",
+    `Czy chcesz usunąć "${name}" wraz ze wszystkimi seriami?`,
+    [
+      { text: "Anuluj", style: "cancel" },
+      { 
+        text: "Usuń", 
+        style: "destructive", 
+        onPress: async () => {
+          try {
+            await ExerciseService.removeExerciseFromSession(sessionExerciseId);
+            // Odśwież widok po usunięciu
+            const updatedData = await SessionService.getWorkoutSessionDetails(sessionId, templateId);
+            setData(updatedData);
+          } catch (error) {
+            console.error(error);
+            Alert.alert("Błąd", "Nie udało się usunąć ćwiczenia.");
+          }
+        } 
+      }
+    ]
+  );
+};
+
 const handleFinishWorkout = () => {
   Alert.alert(
     "Zakończ trening",
@@ -138,13 +163,19 @@ const handleCreateAndAddExercise = async () => {
   }, [sessionId, templateId]);
 
   const renderExercise = ({ item }: { item: SessionExerciseRowDto }) => {
-    const isCompleted = item.wykonaneSerie >= item.planowaneSerie && item.planowaneSerie > 0;
+    const isCompleted = item.wykonaneSerie > 0;
 
     return (
       <View style={styles.row}>
-        <Text style={[styles.cell, styles.exerciseName]}>
+        <TouchableOpacity 
+        style={[styles.cell, styles.exerciseName]}
+        onLongPress={() => handleRemoveExercise(item.sessionExerciseId, item.cwiczenie)}
+        delayLongPress={800} // Czas przytrzymania: 0.8 sekundy
+      >
+        <Text style={{ color: '#FFF', fontWeight: 'bold' }}>
           {item.cwiczenie.toUpperCase()}
         </Text>
+      </TouchableOpacity>
         <Text style={styles.cell}>
           {item.ostatniCiezar !== null ? `${item.ostatniCiezar} KG` : '---'}
         </Text>

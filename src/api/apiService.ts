@@ -119,5 +119,9 @@ export const ExerciseService = {
     // Używamy ścieżki z Twojego kontrolera [HttpPost("create-new")]
     // Pamiętaj o usunięciu "api/", jeśli Twój base URL już go zawiera
     return apiRequest<number>('SessionExercises/create-new', 'POST', data);
+  },
+  removeExerciseFromSession: async (sessionExerciseId: number): Promise<void> => {
+    // Ważne: Sprawdź czy ścieżka to 'SessionExercises' czy 'api/SessionExercises'
+    return apiRequest<void>(`SessionExercises/${sessionExerciseId}`, 'DELETE');
   }
 };
