@@ -4,4 +4,5 @@ export type RootStackParamList = {
   Details: { sessionExerciseId: number };
   WorkoutSession: { sessionId: number; templateId: number };
   WorkoutHistory: undefined;
+  WorkoutDetails: { sessionId: number };
 };

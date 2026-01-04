@@ -42,6 +42,7 @@ export interface WorkoutTemplateDto {
 export interface SessionExerciseRowDto {
   sessionExerciseId: number;
   cwiczenie: string;
+  opis? : string;
   planowaneSerie: number;
   wykonaneSerie: number;
   ostatniCiezar: number | null;
@@ -60,4 +61,25 @@ export interface TrainingSessionDto {
   startedAt: string;    // Daty z backendu przychodzą jako stringi ISO
   completedAt: string | null; // Może być nullem, jeśli trening trwa
   notes: string | null;
+}
+export interface SetDto {
+  reps: number;
+  weight: number;
+  // Dodaj te pola, jeśli zdecydowałeś się na "Opcję A" na backendzie:
+  id?: number;
+  setNumber?: number;
+}
+
+export interface SessionExerciseDetailsDto {
+  exerciseName: string;
+  sets: SetDto[];
+}
+
+export interface TrainingSessionDetailsDto {
+  id: number;
+  templateName: string;
+  date: string;
+  duration: string;
+  notes: string | null;
+  exercises: SessionExerciseDetailsDto[];
 }

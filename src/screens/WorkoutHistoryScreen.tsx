@@ -42,14 +42,16 @@ const WorkoutHistoryScreen = ({ navigation }: Props) => {
     return date.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
 
-  const renderItem = ({ item }: { item: TrainingSessionDto }) => (
-  <View style={styles.historyRow}>
-    {/* Zmieniamy wyświetlanie na templateName */}
+ const renderItem = ({ item }: { item: TrainingSessionDto }) => (
+  <TouchableOpacity 
+    style={styles.historyRow} 
+    onPress={() => navigation.navigate('WorkoutDetails', { sessionId: item.id })}
+  >
     <Text style={styles.workoutName}>
-      {item.templateName ? item.templateName.toUpperCase() : "TRENING WŁASNY"}
+      {item.templateName?.toUpperCase() || "TRENING"}
     </Text>
     <Text style={styles.workoutDate}>{formatDate(item.startedAt)}</Text>
-  </View>
+  </TouchableOpacity>
 );
 
   return (
