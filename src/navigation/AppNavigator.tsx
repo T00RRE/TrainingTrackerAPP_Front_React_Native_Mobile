@@ -13,7 +13,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      {/* initialRouteName musi pasować do nazwy w Stack.Screen */}
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen 
           name="Home" 

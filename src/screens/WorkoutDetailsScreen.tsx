@@ -44,23 +44,20 @@ const WorkoutDetailsScreen = ({ route, navigation }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Text style={styles.backText}>{"<"}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{details.templateName.toUpperCase()}</Text>
-        <View style={{ width: 40 }} /> {/* Spacer dla wyśrodkowania tytułu */}
+        <View style={{ width: 40 }} />
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Info Card */}
         <View style={styles.infoSection}>
           <Text style={styles.infoLabel}>DATA: <Text style={styles.infoValue}>{new Date(details.date).toLocaleDateString()}</Text></Text>
           <Text style={styles.infoLabel}>CZAS: <Text style={styles.infoValue}>{details.duration}</Text></Text>
         </View>
 
-        {/* Exercises List */}
         {details.exercises.map((exercise, exIndex) => (
           <View key={exIndex} style={styles.exerciseCard}>
             <Text style={styles.exerciseName}>{exercise.exerciseName.toUpperCase()}</Text>

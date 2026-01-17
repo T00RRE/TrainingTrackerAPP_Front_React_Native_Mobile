@@ -8,10 +8,8 @@ import { TrainingSessionDto } from '../types/models'; // Pamiętaj o imporcie DT
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const HomeScreen = ({ navigation }: Props) => {
-  // 1. STANY MUSZĄ BYĆ TUTAJ
   const [lastWorkouts, setLastWorkouts] = useState<TrainingSessionDto[]>([]);
 
-  // 2. FUNKCJA POMOCNICZA WEWNĄTRZ LUB NAD KOMPONENTEM
   const getDaysAgo = (dateString: string) => {
     const start = new Date(dateString);
     const now = new Date();
@@ -26,7 +24,6 @@ const HomeScreen = ({ navigation }: Props) => {
     return `${diffDays} DNI TEMU`;
   };
 
-  // 3. EFEKT POBIERANIA DANYCH WEWNĄTRZ
   useEffect(() => {
     const fetchLastWorkouts = async () => {
       try {
@@ -97,7 +94,6 @@ const HomeScreen = ({ navigation }: Props) => {
   );
 };
 
-// ... style pozostają bez zmian ...
 
 const styles = StyleSheet.create({
   container: { 

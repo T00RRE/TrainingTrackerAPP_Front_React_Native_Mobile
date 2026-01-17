@@ -16,7 +16,6 @@ const DetailsScreen = ({ route }: Props) => {
     const loadSets = async () => {
       try {
         setLoading(true);
-        // Pobieramy dane z Twojego działającego API
         const data = await ExerciseSetService.getSetsForSessionExercise(sessionExerciseId);
         setSets(data);
       } catch (error) {
@@ -30,7 +29,6 @@ const DetailsScreen = ({ route }: Props) => {
     loadSets();
   }, [sessionExerciseId]);
 
-  // Komponent pojedynczego wiersza (serii)
   const renderSetItem = ({ item, index }: { item: ExerciseSetDto, index: number }) => (
     <View style={styles.setCard}>
       <View style={styles.setNumberBadge}>
@@ -78,7 +76,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    // Cień dla iOS i Androida
     elevation: 3,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

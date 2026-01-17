@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
-// POPRAWIONE IMPORTY (zgodnie z Twoim projektem)
 import { SessionService } from '../api/apiService'; 
 import { TrainingSessionDto } from '../types/models'; 
 
 type Props = NativeStackScreenProps<RootStackParamList, 'WorkoutHistory'>;
+
+const ItemSeparator = memo(() => <View style={styles.separator} />);
 
 const WorkoutHistoryScreen = ({ navigation }: Props) => {
   const [history, setHistory] = useState<TrainingSessionDto[]>([]);
@@ -16,10 +17,8 @@ const WorkoutHistoryScreen = ({ navigation }: Props) => {
     const loadHistory = async () => {
       try {
         setLoading(true);
-        // Zakładam, że używamy UserId: 1 na sztywno, tak jak w poprzednich ekranach
         const data = await SessionService.getTrainingSessions(1); 
         
-        // Rozwiązanie błędów 'any' przez jawne typowanie parametrów
         const completedSessions = data
           .filter((s: TrainingSessionDto) => s.completedAt !== null)
           .sort((a: TrainingSessionDto, b: TrainingSessionDto) => 
@@ -56,7 +55,6 @@ const WorkoutHistoryScreen = ({ navigation }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Przycisk powrotu i ikony zgodne z Twoją Figmą */}
       <View style={styles.headerIcons}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Text style={styles.backText}>{"<"}</Text>
@@ -77,7 +75,7 @@ const WorkoutHistoryScreen = ({ navigation }: Props) => {
             data={history}
             keyExtractor={(item) => item.id.toString()}
             renderItem={renderItem}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            ItemSeparatorComponent={ItemSeparator}
             ListEmptyComponent={<Text style={styles.emptyText}>Brak ukończonych treningów</Text>}
           />
         )}

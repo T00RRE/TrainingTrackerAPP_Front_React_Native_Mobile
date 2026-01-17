@@ -15,7 +15,6 @@ const WorkoutSelectionScreen = ({ navigation }: Props) => {
     const loadTemplates = async () => {
       try {
         setLoading(true);
-        // Pobieramy dane dla UserID = 1 zgodnie z Twoją bazą
         const data = await WorkoutService.getWorkoutTemplates(1);
         setTemplates(data);
       } catch (error) {
@@ -29,18 +28,14 @@ const WorkoutSelectionScreen = ({ navigation }: Props) => {
     loadTemplates();
   }, []);
 
-  // NOWA FUNKCJA: Obsługuje tworzenie nowej sesji na backendzie
   const handleSelectTemplate = async (templateId: number) => {
     try {
       setLoading(true);
       
-      // 1. Wywołujemy StartTrainingSessionHandler na backendzie
-      // Przekazujemy UserId (1) oraz TemplateId, aby skopiować ćwiczenia
       const newSessionId = await SessionService.startSession(1, templateId);
       
       console.log("Utworzono nową sesję o ID:", newSessionId);
 
-      // 2. Nawigujemy do ekranu sesji z dynamicznym ID sesji i ID szablonu
       navigation.navigate('WorkoutSession', { 
         sessionId: newSessionId,
         templateId: templateId 
@@ -53,7 +48,6 @@ const WorkoutSelectionScreen = ({ navigation }: Props) => {
     }
   };
 
-  // Funkcja renderująca pojedynczy przycisk treningu (np. PUSH, PULL)
   const renderItem = ({ item, index }: { item: WorkoutTemplateDto, index: number }) => (
     <View>
       <TouchableOpacity 
@@ -62,7 +56,6 @@ const WorkoutSelectionScreen = ({ navigation }: Props) => {
       >
         <Text style={styles.templateText}>{item.name.toUpperCase()}</Text>
       </TouchableOpacity>
-      {/* Rysujemy linię oddzielającą, o ile nie jest to ostatni element listy */}
       {index < templates.length - 1 && <View style={styles.separator} />}
     </View>
   );

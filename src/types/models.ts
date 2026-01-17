@@ -22,7 +22,7 @@ export interface TrainingDto {
     name: string;
     description: string;
     date: Date;
-    duration: number; // w minutach
+    duration: number; 
     notes: string;
 }
 
@@ -57,15 +57,14 @@ export interface TrainingSessionDto {
   id: number;
   userId: number;
   templateId: number;
-  templateName: string; // Nazwa szablonu (np. PUSH, PULL)
-  startedAt: string;    // Daty z backendu przychodzą jako stringi ISO
-  completedAt: string | null; // Może być nullem, jeśli trening trwa
+  templateName: string;
+  startedAt: string;   
+  completedAt: string | null; 
   notes: string | null;
 }
 export interface SetDto {
   reps: number;
   weight: number;
-  // Dodaj te pola, jeśli zdecydowałeś się na "Opcję A" na backendzie:
   id?: number;
   setNumber?: number;
 }
