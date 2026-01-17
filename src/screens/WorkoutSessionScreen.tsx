@@ -50,7 +50,6 @@ const WorkoutSessionScreen = ({ route, navigation }: Props) => {
 
  
 
-  // Stany dla Modala
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -58,11 +57,10 @@ const WorkoutSessionScreen = ({ route, navigation }: Props) => {
 
   const [weight, setWeight] = useState('');
 
-  const [reps, setReps] = useState(''); // To pole będzie teraz odpowiadać za "Serie" na ekranie głównym
+  const [reps, setReps] = useState('');
 
 
 
-// Stany dla modalu "Nowe ćwiczenie"
 
 const [createModalVisible, setCreateModalVisible] = useState(false);
 
@@ -72,7 +70,6 @@ const [newDescription, setNewDescription] = useState('');
 
 const [newPlannedSets, setNewPlannedSets] = useState('3');
 
-  // 1. NOWE STANY DLA MODALU SZCZEGÓŁÓW
 
   const [detailsModalVisible, setDetailsModalVisible] = useState(false);
 
@@ -82,7 +79,6 @@ const [newPlannedSets, setNewPlannedSets] = useState('3');
 
 
 
-  // ZMIENIONA FUNKCJA - teraz otwiera modal zamiast Alertu
 
   const handleLongPressExercise = (item: SessionExerciseRowDto) => {
 
@@ -94,7 +90,6 @@ const [newPlannedSets, setNewPlannedSets] = useState('3');
 
 
 
-  // Funkcja usuwania wywoływana z wnętrza nowego modalu
 
   const confirmDeleteFromDetails = () => {
 
@@ -124,7 +119,7 @@ const [newPlannedSets, setNewPlannedSets] = useState('3');
 
               await ExerciseService.removeExerciseFromSession(exerciseDetails.sessionExerciseId);
 
-              setDetailsModalVisible(false); // Zamknij modal po usunięciu
+              setDetailsModalVisible(false); 
 
               const updatedData = await SessionService.getWorkoutSessionDetails(sessionId, templateId);
 
@@ -172,17 +167,14 @@ const handleFinishWorkout = () => {
 
           try {
 
-            // 1. Wywołujemy API, aby ustawić datę zakończenia w bazie
 
             await SessionService.finishSession(sessionId);
 
            
 
-            // 2. Po sukcesie wracamy do ekranu głównego (listy treningów)
 
             navigation.popToTop();
 
-            // lub navigation.goBack() jeśli chcesz wrócić tylko o jeden ekran
 
           } catch (error) {
 
@@ -216,7 +208,6 @@ const handleFinishWorkout = () => {
 
     try {
 
-      // Wysyłamy pojedynczy wpis. Wartość 'reps' zostanie zsumowana w C# i wyświetlona jako Serie.
 
       await SetService.addSet({
 
@@ -240,7 +231,6 @@ const handleFinishWorkout = () => {
 
      
 
-      // Odświeżamy dane widoku
 
       const updatedData = await SessionService.getWorkoutSessionDetails(sessionId, templateId);
 
@@ -270,7 +260,6 @@ const handleCreateAndAddExercise = async () => {
 
   try {
 
-    // Wywołujemy nowy endpoint przez ExerciseService
 
     await ExerciseService.createAndAddToSession({
 
@@ -286,7 +275,6 @@ const handleCreateAndAddExercise = async () => {
 
 
 
-    // Czyścimy pola i zamykamy modal
 
     setCreateModalVisible(false);
 
@@ -298,7 +286,6 @@ const handleCreateAndAddExercise = async () => {
 
 
 
-    // Odświeżamy listę ćwiczeń w aktualnej sesji
 
     const updatedData = await SessionService.getWorkoutSessionDetails(sessionId, templateId);
 
@@ -368,7 +355,6 @@ const handleCreateAndAddExercise = async () => {
 
           style={[styles.cell, styles.exerciseName]}
 
-          // ZMIANA: Teraz wywołujemy otwarcie modalu
 
           onLongPress={() => handleLongPressExercise(item)}
 
@@ -626,7 +612,6 @@ const handleCreateAndAddExercise = async () => {
 
 
 
-      {/* MODAL DOPASOWANY DO TWOICH WYMAGAŃ */}
 
       <Modal visible={modalVisible} transparent animationType="fade">
 
@@ -710,7 +695,6 @@ const handleCreateAndAddExercise = async () => {
 
       </Modal>
 
-      {/* MODAL: UTWÓRZ I DODAJ NOWE ĆWICZENIE */}
 
 <Modal visible={createModalVisible} transparent animationType="slide">
 
@@ -918,7 +902,6 @@ const styles = StyleSheet.create({
 
 },
 
-  // NOWE STYLE DLA MODALU SZCZEGÓŁÓW
 
   detailsModalContent: {
 
